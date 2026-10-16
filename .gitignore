@@ -1,0 +1,19 @@
+# dependencies
+node_modules/
+
+# build / host caches
+dist/
+.vercel/
+.netlify/
+.tanstack/
+
+# local junk — not the site
+artifacts/
+attachments/
+screenshots/
+*.log
+
+# env
+.env
+.env.*
+!.env.example

@@ -1,0 +1,8 @@
+{
+  "stats": [
+    { "value": "0", "label": "Places visited" },
+    { "value": "0", "label": "States explored" },
+    { "value": "2026", "label": "Travel year" },
+    { "value": "0 km", "label": "Distance logged" }
+  ]
+}

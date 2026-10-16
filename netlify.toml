@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Exact /admin only — never /admin/* or config.yml is served as HTML.
+[[redirects]]
+  from = "/admin"
+  to = "/admin/index.html"
+  status = 200

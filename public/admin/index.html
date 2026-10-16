@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Vanappunal Admin</title>
+    <script>
+      (function () {
+        var h = location.hash || "";
+        if (
+          /(recovery_token|invite_token|confirmation_token)=/.test(h) &&
+          location.pathname.indexOf("/admin") !== 0
+        ) {
+          location.replace("/admin/" + h);
+        }
+      })();
+    </script>
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <style>
+      html, body { height: 100%; margin: 0; background: #0c0c0b; color: #ebe6dc; font-family: "Times New Roman", Times, serif; }
+    </style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/decap-cms@3.6.2/dist/decap-cms.js"></script>
+    <script>
+      if (window.netlifyIdentity) {
+        window.netlifyIdentity.on("init", function (user) {
+          if (!user) {
+            window.netlifyIdentity.on("login", function () {
+              document.location.href = "/admin/";
+            });
+          }
+        });
+      }
+    </script>
+  </body>
+</html>

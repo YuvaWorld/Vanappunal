@@ -1,0 +1,150 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: public/uploads
+public_folder: /uploads
+display_url: /
+site_url: /
+logo_url: /favicon.svg
+
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+  - name: places
+    label: Places
+    label_singular: Place
+    folder: content/places
+    create: true
+    delete: true
+    extension: json
+    format: json
+    slug: "{{slug}}"
+    identifier_field: title
+    summary: "{{title}} — {{location}}"
+    editor:
+      preview: false
+    fields:
+      - { label: Place name, name: title, widget: string, hint: "The name visitors see. Example: Chapultepec Castle" }
+      - { label: Region / city, name: location, widget: string, hint: "Example: Mexico City" }
+      - { label: Country, name: country, widget: string, hint: "The real country — Mexico, South Africa, India, Nepal…" }
+      - { label: Date, name: date, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - {
+          label: Latitude,
+          name: lat,
+          widget: number,
+          value_type: float,
+          required: true,
+          hint: "Google Maps: right-click the exact spot → copy coordinates. FIRST number.",
+        }
+      - {
+          label: Longitude,
+          name: lng,
+          widget: number,
+          value_type: float,
+          required: true,
+          hint: "SECOND number from those coordinates. Example Leh: 34.1526, 77.5771",
+        }
+      - {
+          label: Note,
+          name: description,
+          widget: markdown,
+          required: false,
+          hint: "Write normally. Paragraphs stay paragraphs. Use - for bullets, 1. for numbered lists.",
+        }
+      - label: Photos
+        name: photos
+        widget: list
+        required: false
+        hint: "Add as many photos as you want, from this computer."
+        field:
+          label: Photo
+          name: photo
+          widget: image
+          choose_url: false
+      - label: Videos
+        name: videos
+        widget: list
+        required: false
+        hint: "Upload the video file from this computer. Not a YouTube link. Keep each file under 80 MB."
+        field:
+          label: Video
+          name: video
+          widget: file
+          choose_url: false
+          media_library:
+            allow_multiple: true
+
+  - name: news
+    label: News & launches
+    label_singular: Update
+    folder: content/news
+    create: true
+    delete: true
+    extension: json
+    format: json
+    slug: "{{year}}-{{slug}}"
+    identifier_field: title
+    summary: "{{title}} — {{kind}}"
+    editor:
+      preview: false
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Date, name: date, widget: datetime, date_format: YYYY-MM-DD, time_format: false }
+      - {
+          label: Kind,
+          name: kind,
+          widget: select,
+          options: ["news", "launch", "site"],
+          default: "news",
+          hint: "news = a note. launch = a product/site going live. site = a new website.",
+        }
+      - { label: Summary, name: summary, widget: markdown, required: false }
+      - { label: Link, name: url, widget: string, required: false, hint: "Optional. The live URL of the site or launch." }
+      - { label: Image, name: image, widget: image, required: false, choose_url: false }
+
+  - name: site
+    label: Site
+    files:
+      - name: home
+        label: Home
+        file: content/site/home.json
+        fields:
+          - {
+              label: Banner photo,
+              name: portrait,
+              widget: image,
+              required: false,
+              choose_url: false,
+              hint: "Full-screen travel photograph for the first page.",
+            }
+          - {
+              label: Banner video,
+              name: video,
+              widget: file,
+              required: false,
+              choose_url: false,
+              hint: "Plays dark and almost invisible behind the photo. Upload from this computer. Keep under 80 MB. Mute, looping.",
+            }
+          - label: Slideshow
+            name: slideshow
+            widget: list
+            hint: "Film strip on Home and Travel Insights. Replace these with your own photos anytime."
+            field:
+              label: Frame
+              name: photo
+              widget: image
+              choose_url: false
+      - name: insights
+        label: Travel Insights stats
+        file: content/site/insights.json
+        fields:
+          - label: Stats
+            name: stats
+            widget: list
+            hint: "The horizontal numbers on Travel Insights. Example value: 2,430 km"
+            fields:
+              - { label: Value, name: value, widget: string }
+              - { label: Label, name: label, widget: string }
